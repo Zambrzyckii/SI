@@ -12,6 +12,21 @@ footer {visibility: hidden;}
 header {visibility: hidden;}
 </style>
 """
+
+st.markdown("""
+<style>
+.stApp {
+background-color: #0e1117;
+}
+.stMetric {
+background-color: #1e2130;
+border-radius: 10px;
+padding: 10px;
+border: 1px solid #00FF41;
+}
+</style>
+""", unsafe_allow_html=True)
+
 st.markdown(hide_st_style, unsafe_allow_html=True)
 
 st.title("Simulation App")
@@ -50,12 +65,15 @@ with tab1:
                         with stats_placeholder:
                             st.markdown("---")
                             st.markdown("Stats")
-                            c1,c2 = st.columns(2)
+                            c1, c2 = st.columns(2)
                             c1.metric("Status", stats["status"])
                             c2.metric("Score", stats["score"])
                             st.metric("Steps", stats["steps"])
                             st.write("Altitude")
                             st.line_chart(stats["charts"])
+                            action_names = {0: "Do nothing", 1: "Left engine", 2: "Main engine", 3: "Right engine"}
+                            counts = {action_names[i]: stats["actions"].count(i) for i in range(4)}
+                            st.bar_chart(counts)
                         img = base64.b64decode(img)
                         st.image(img, width=800)
                     else:
