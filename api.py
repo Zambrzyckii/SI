@@ -8,7 +8,7 @@ app = FastAPI()
 
 
 @app.get("/simulation")
-def make_simualtion():
+def make_simualtion(wind: float = 0.0, turbulence: float = 0.0,gravity: float = -10.0):
     name = "result.gif"
-    record("model",name)
+    record("model",name,wind_power = wind, turbulence_power = turbulence,gravity = gravity)
     return FileResponse(name,media_type="image/gif")

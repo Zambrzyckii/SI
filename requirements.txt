@@ -1,0 +1,7 @@
+gymnasium[box2d]
+stable-baselines3
+imageio
+fastapi
+uvicorn
+streamlit
+requests

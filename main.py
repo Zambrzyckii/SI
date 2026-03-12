@@ -6,7 +6,7 @@ model = PPO.load("model.zip")
 observation, info = env.reset()
 print(env.observation_space)
 print(env.action_space)
-for _ in range(5000):
+for _ in range(50000):
     action, _states = model.predict(observation, deterministic=True)
     observation, reward, terminated, truncated, info = env.step(action)
 
