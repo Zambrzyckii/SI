@@ -12,9 +12,11 @@ def record(model_path, name, wind_power = 0.0, turbulence_power = 0.0,gravity = 
     total_reward = 0
     steps = 0
     frames = []
+    charts = []
     while True:
         action, _states = mod.predict(obs,deterministic=True)
         frames.append(env.render())
+        charts.append(float(obs[1]))
         obs, reward, terminated, truncated,info = env.step(action)
         total_reward += reward
         steps += 1
@@ -30,6 +32,7 @@ def record(model_path, name, wind_power = 0.0, turbulence_power = 0.0,gravity = 
     stats = {
         "score" : round(total_reward,3),
         "steps" : steps,
-        "status" : "success" if total_reward > 200 else "failure" if total_reward < 0 else "landed"
+        "status" : "success" if total_reward > 200 else "failure" if total_reward < 0 else "landed",
+        "charts" : charts
     }
     return outbytes,stats

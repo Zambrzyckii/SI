@@ -54,6 +54,8 @@ with tab1:
                             c1.metric("Status", stats["status"])
                             c2.metric("Score", stats["score"])
                             st.metric("Steps", stats["steps"])
+                            st.write("Altitude")
+                            st.line_chart(stats["charts"])
                         img = base64.b64decode(img)
                         st.image(img, width=800)
                     else:
