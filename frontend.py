@@ -1,3 +1,5 @@
+import base64
+
 import streamlit as st
 import requests
 
@@ -32,6 +34,7 @@ with tab1:
     with col1:
         st.subheader("Status")
         start_button = st.button("Start", use_container_width=True)
+        stats_placeholder = st.container()
 
     with col2:
         if start_button:
@@ -41,7 +44,18 @@ with tab1:
                     response = requests.get(url)
 
                     if response.status_code == 200:
-                        st.image(response.content, width=800)
+                        data = response.json()
+                        stats = data["stats"]
+                        img = data["image"]
+                        with stats_placeholder:
+                            st.markdown("---")
+                            st.markdown("Stats")
+                            c1,c2 = st.columns(2)
+                            c1.metric("Status", stats["status"])
+                            c2.metric("Score", stats["score"])
+                            st.metric("Steps", stats["steps"])
+                        img = base64.b64decode(img)
+                        st.image(img, width=800)
                     else:
                         st.error("Error occured!")
                 except requests.exceptions.ConnectionError:
